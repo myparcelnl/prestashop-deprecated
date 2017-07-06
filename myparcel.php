@@ -3365,7 +3365,7 @@ class MyParcel extends Module
 
         $mcds = MyParcelCarrierDeliverySetting::getByCarrierReference($carrier->id_reference);
 
-        if (Tools::strtoupper($currency->iso_code) === 'EUR'
+        if (!empty($mcds) && Tools::strtoupper($currency->iso_code) === 'EUR'
             && ($mcds->delivery || $mcds->pickup)
         ) {
             return $this->display(__FILE__, 'views/templates/hooks/beforecarrier.tpl');

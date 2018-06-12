@@ -26,7 +26,7 @@
     </h2>
     <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop">GitHub</a>
     <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop/releases">Alle updates</a>
-    <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop/archive/master.zip">Laatste stabiele versie</a>
+    <a id="latest-release-zip" target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop/archive/master.zip">Laatste stabiele versie</a>
 </section>
 <section class="main-content">
     <h1>Inleiding</h1>
@@ -257,5 +257,17 @@ Bij de keuze van een brievenbuspakket verdwijnen de optie mogelijkheden. Dit all
             </p>
         </footer>
 </section>
+<script type="text/javascript">
+  (function init() {
+    if (typeof $ === 'undefined') { setTimeout(init, 100);return; }
+    $('#latest-release-zip').click(function (e) {
+      e.preventDefault();
+      $.get('https://api.github.com/repos/myparcelnl/prestashop/releases/latest')
+        .then(function (response) { window.location.href = response.assets[0].browser_download_url; })
+        .fail(function () { window.location.href = e.target.href; })
+      ;
+    });
+  }());
+</script>
 </body>
 </html>

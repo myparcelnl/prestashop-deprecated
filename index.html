@@ -12,6 +12,19 @@
     <link href="css/github-light.css" media="screen" rel="stylesheet" type="text/css"/>
     <script src="js/jquery-3.0.0.min.js"></script>
     <script src="js/auto_menu.js"></script>
+    <script type="text/javascript">
+      function downloadLatestFromGitHub(event, repo) {
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        request.open('GET', 'https://api.github.com/repos/' + repo + '/releases/latest', true);
+        request.onload = function () {
+          if (request.status >= 200 && request.status < 400) {
+            window.location.href = JSON.parse(request.responseText).assets[0].browser_download_url;
+          }
+        };
+        request.send();
+      }
+    </script>
 </head>
 <body>
 <section class="page-header">
@@ -26,7 +39,7 @@
     </h2>
     <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop">GitHub</a>
     <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop/releases">Alle updates</a>
-    <a id="latest-release-zip" target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop/archive/master.zip">Laatste stabiele versie</a>
+    <a id="latest-release-zip" target="_blank" class="btn" onclick="downloadLatestFromGitHub(event, 'myparcelnl/prestashop')" href="https://github.com/myparcelnl/prestashop/releases/latest">Laatste stabiele versie</a>
 </section>
 <section class="main-content">
     <h1>Inleiding</h1>

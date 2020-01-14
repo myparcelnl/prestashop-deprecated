@@ -1,349 +1,286 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <meta charset="UTF-8" />
-    <title>MyParcel Prestashop Handleiding</title>
-    <meta name="description" content="The documentation to make a connection with MyParcel">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta charset="UTF-8"/>
+    <title>PrestaShop MyParcel Gebruikershandleiding</title>
+    <meta name="description" content="Installatie- gebruikershandleiding voor de PrestaShop MyParcel plug-in">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="shortcut icon" href="https://backoffice.myparcel.nl/images/favicon/favicon.ico">
-    <link href="css/normalize.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css" />
-    <link href="css/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="css/github-light.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/normalize.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css"/>
+    <link href="css/stylesheet.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="css/github-light.css" media="screen" rel="stylesheet" type="text/css"/>
     <script src="js/jquery-3.0.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     <script src="js/auto_menu.js"></script>
+    <script type="text/javascript">
+      function downloadLatestFromGitHub(event, repo) {
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        request.open('GET', 'https://api.github.com/repos/' + repo + '/releases/latest', true);
+        request.onload = function () {
+          if (request.status >= 200 && request.status < 400) {
+            window.location.href = JSON.parse(request.responseText).assets[0].browser_download_url;
+          }
+        };
+        request.send();
+      }
+    </script>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="menu col-xs-4 col-lg-3">
-            <nav class="navbar nav nav-pills nav-stacked">
-                <div class="menu-items">
-                </div>
-            </nav>
-        </div>
-        <section class="page-header col-xs-8 col-xs-offset-4 col-lg-9 col-lg-offset-3">
-            <img height="185" alt="" src="media/logo_myparcel.png">
-            <h1 class="project-name">
-                Handleiding Prestashop
-            </h1>
-            <br />
-            <a target="_blank" class="btn" href="https://google.nl">Link 1</a>
-            <a target="_blank" class="btn" href="https://google.nl">Link 2</a>
-        </section>
-        <section class="main-content col-xs-8 col-xs-offset-4 col-lg-7 col-lg-offset-4">
-            <h1>Inleiding</h1>
+<section class="page-header">
+    <p>
+        <img alt="Logo MyParcel" src="media/logo_myparcel.png"/>
+        <img height="180" alt="logo PrestaShop" src="media/Prestashop-logo.png"/></p>
+    <h1 class="project-name">
+        Gebruikershandleiding
+    </h1>
+    <h2 class="project-tagline">
+        MyParcel PrestaShop 1.5/1.6/1.7 extensie
+    </h2>
+    <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop">GitHub</a>
+    <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop/releases">Alle updates</a>
+    <a id="latest-release-zip" target="_blank" class="btn" onclick="downloadLatestFromGitHub(event, 'myparcelnl/prestashop')" href="https://github.com/myparcelnl/prestashop/releases/latest">Laatste stabiele versie</a>
+</section>
+<section class="main-content">
+    <h1>Inleiding</h1>
+    <p>
+        In deze handleiding laten wij zien hoe jij de MyParcel plug-in kunt installeren in jouw PrestaShop omgeving. Vervolgens geven wij een instructie van het gebruik van de plug-in.<br><br>
+De installatie en het gebruik van de koppeling wordt jou kosteloos aangeboden door MyParcel. Wij helpen jou graag met vragen over het gebruik van de plug-in. Omdat PrestaShop een open source platform is, kan het zijn dat de MyParcel plug-in conflicteert met reeds geïnstalleerde plug-ins. <br><br>De MyParcel plugin wordt op een juiste werking getest in een standaard PrestaShop omgeving. Vooral het gebruik van gemodificeerde check-out modules en 3th party shipping modules kan conflicten geven met de MyParcel module.
+<br><br>
+De in de vensters getoonde prijzen zijn slechts als voorbeeld ingesteld en wijken af van de werkelijke tarieven. Voor de juiste prijzen kun jij de tarieven in jouw account raadplegen.
+<br><br>
+Mocht je problemen ondervinden met de installatie, raden wij je aan contact op te nemen met jouw webshop bouwer.
+
+    </p>
+
+    <h1>Inhoud</h1>
+    <div class="menu"></div>
+    <div>
+
+        <!--Hoofdstuk 1-->
+        <h1 id="1">1 Installatie</h1>
+        <p>
+          Dit hoofdstuk omschrijft de installatie van de MyParcel PrestaShop Plug-in met gebruik van de knop “Nieuwe Module toevoegen”.  <br><br> Wij adviseren de installatie altijd eerst op een testomgeving uit te voeren en een back-up te maken van jouw webshop voor je met de plugin in de live webshop gaat.
+
+        </p>
+        <ol>
+            <li>Download het MyParcel <a href="https://github.com/myparcelnl/prestashop/releases/download/v2.0.7/myparcel-v2.0.7.zip" target="_blank">PrestaShop Plug-in.zip </a>bestand</li>
+        </ol>
+
+        <h2 id="1_1">1.1 Via het CMS</h2>
+        <ol>
+            <li>Ga naar Modules → “Modules en Services” en klik vervolgens op “Nieuwe Module” toevoegen. Selecteer met behulp van de knop "Kies een bestand" het gedownloade zip bestand.</li>
+            <img src="media/myparcel_installer.png"/>
+            <li>Als het bestand is geselecteerd dan klik je op de knop "Upload deze module".</li>
+        </ol>
+
+        <h2 id="1_2">1.2 Testen</h2>
+        <p>
+            Met de plugin van MyParcel worden bepaalde bezorgopties toegevoegd aan jouw checkout. Welke bezorgopties je jouw klant aan wil bieden kun je instellen in de configuratie van de MyParcel plug-in. Wij adviseren dan ook om na het installeren van de plugin jouw bestelproces goed door te lopen of alles naar wens is.<br><br>
+            Ook omdat niet alle checkouts in PrestaShop hetzelfde werken is het nogmaals goed om te kijken of alles naar wens staat. Staat alles op de juiste plaats en is het goed uitgelijnd? Onze tip is om hier naar te kijken voordat jouw klanten dit gebruiken.
+        </p>
+        <h1 id="2">2 Landen, zones en vervoerders instellen</h1>
+
+        <h2 id="2_1">2.1 Het instellen van zones en landen</h2>
+        <p>Via het menu onderdeel “Internationaal” > “Locaties” kun jij de zones instellen met daarin de landen die onder die zone vallen. Een zone kan bijvoorbeeld meerdere landen bevatten die jij dezelfde verzendprijs wil geven. (dat hoeft dus niet de prijs te zijn die door MyParcel wordt berekend). Jij wil bijvoorbeeld meer Belgische klanten krijgen, dus biedt jij een aantrekkelijke prijs aan voor de verzending van jouw producten, gelijk aan het bijvoorbeeld het tarief voor Nederland.</p>
+
+      <p>In de standaard configuratie staan de zones van complete werelddelen. Jij zal dus nieuwe zones moeten toevoegen om per land een vervoerder te kunnen toevoegen.</p>
+
+      <p>Als de zones met de bijbehorende landen zijn aangemaakt, kun jij verder met per zone een “Vervoerder” aan te maken. Op die manier kiest Prestashop de juiste prijs bij de juiste vervoerders.</p>
+
+      <p>
+        <img src="media/Presta-locaties-zoneoverzicht-1.png"/>
+  Bovenstaand venster geeft de standaard zones aan die Prestashop als default instelling weergeeft.
+      <br><br>  <img src="media/Presta-zones-toevoegen-duitsland.png"/>
+      als jij de button "Nieuwe zone toevoegen" aanklikt krijg je bovenstaand scherm waar een naam van de zone ingevuld moet worden.
+      <br><br>  <img src="media/Presta-landen-duitsland-toewijzen-3.png"/>
+      Als je op het scherm landen klikt en jij kiest Duitsland, zie jij dat Duitsland onder de zone Europa valt. Voor Duitsland willen wij een vervoerder instellen die alleen voor Duitse klanten een bepaalde prijs laat zien in de checkout.
+    <br><br>  <img src="media/Presta-zone-duitsland-toewijzen.png"/>
+      Voor Duitsland hebben wij een aparte zone aangemaakt die wij "Pakket Duitsland" hebben genoemd.
+    <br><br>    <img src="media/Presta-zones-landenoverzicht.png"/>
+        In het tabblad landen zien wij dat het land Duitsland is toegewezen aan de zone "Pakket Duitsland".
+
+
+      </p>
+        <h2 id="2_2">2.1 Het instellen van de “Vervoerders”</h2>
+        <p>
+          Als eerste ga jij bepalen welke verzendmethodes (vervoerders) jij wil gebruiken om de producten bij de klant te krijgen.<br><br>
+
+      Dit is afhankelijk van verschillende parameters. Deze zijn:
+      <ol>
+      <li>Vanuit welke landen kan men bestellen</li>
+      <li>Voor Nederland: welke soort zending wil ik gebruiken (pakket en/of brievenbuspakket).</li>
+      <li>Wil ik voor Nederland en België ook ophaallocaties aanbieden</li>
+      <li>Wil ik dat klanten een product kunnen ophalen in de fysieke winkel of magazijn</li>
+      <li>Welke bezorg opties wil ik aan Nederlandse klanten aanbieden (avondlevering, niet bij de buren, handtekening voor ontvangst etc….)</li></ol>
+
+      Niet onbelangrijk is om ook te denken aan de prijzen die jij aan jouw klant wil doorberekenen. De bedragen van de opties moet men los zien van het bedrag wat er wordt doorberekend door MyParcel. Het aanbieden van gratis avondlevering kan het verschil  maken tussen jou en de concurrent om de klant voor jouw webshop en producten te laten kiezen.</p>
+      <img src="media/Presta-vervoerders-overzicht.png"/>
+      Hierboven zie je een overzicht van de vervoerders die als voorbeeld in Prestashop aangemaakt kunnen worden. Jij gaat nu een vervoerder voor pakketten aanmaken die in de zone "Pakket Nederland" gaat vallen.
+
+    <br><br>  <img src="media/Presta-vervoerders-algemene-instellingen.png"/>
+      Bij de algemene instellingen kun jij de vervoerder een naam geven, en bij de transiettijd eventueel een verwerkingsboodschap zetten.
+    <br><br>  <img src="media/Presta-bezorgadressen-kosten.png"/>
+      Bij bovenstaand scherm geef jij de prijs in bij de zone die er voor deze vervoerder hebt aangemaakt.
+    <br><br>  <img src="media/Presta-vervoerders-grootte-gewicht.png"/>
+        Bij bovenstaand scherm geef jij de pakketafmetingen en het maximum totale pakketgewicht in.
+    <br><br>  <img src="media/Presta-vervoerders-samenvatting.png"/>
+Bovenstaand scherm geeft een overzicht van alle instellingen voor deze vervoerder zijn gemaakt.
+
+
+
+        <!--hoofdstuk 3-->
+        <h1 id="3">3 Configuratie MyParcel module</h1>
+        <p>
+
+            <ol>
+                <li>Ga in PrestaShop naar <span class="nice"> Modules → Modules en Services → MyParcel → Configureer </span></li>
+                <img src="media/myparcel_configureer.png"/>
+            </ol>
+        </p>
+
+        <h2 id="3_1">3.1 API instellingen</h2>
+        <p>
+            Om verbinding te kunnen maken met jouw MyParcel account is het noodzakelijk om hier jouw API-key in te vullen.<br><br>
+            <img src="media/myparcel_api_key.png"/><br>
+
+            Als je ingelogd bent in jouw MyParcel account op <a href="https://backoffice.myparcel.nl/">backoffice.myparcel.nl</a> dan kun je deze vinden in menu <span class="nice">Instellingen → Algemeen.</span>
+        </p>
+
+
+        <h2 id="3_2">3.2 Orderstatus automatisering</h2>
+        <p>
+            Geef hier aan of je de status "Verzonden" en "Afgeleverd" automatisch wilt neerzetten nadat de order is geëxporteerd naar MyParcel.
+        </p>
+
+        <h2 id="3_3">3.3 MyParcel checkout</h2>
+        <p>
+            Alle kleuren van de checkout zijn hier aan te passen, naar de gewenste kleuren. Naast de kleuren, is het ook mogelijk om het lettertype aan te passen.
+        </p><br><br>
+        <img src="media/myparcel_checkout.png"/>
+
+
+        <h2 id="3_4">3.4 Verzendlabels</h2>
+        <p>In het kenmerk van een label heb jij de keuze om er een tekst in te zetten, of om een order ID of Order referentie mee te geven om later makkelijker op te zoeken welke order bij welk pakket hoort.</p>
+
+<p>Bij de keuze voor een standaardprinter gaat het systeem er van uit dat er een A4 (laser)printer gebruikt wordt die 4 A6 labels op één vel uitprint. Je kunt ook de keuze maken voor een labelprinter (moet wel geschikt zijn voor A6 labels) om jouw verzendlabels uit te printen.</p>
+
+        <h2 id="3_5">3.5 Concepten</h2>
+        <p>
+            Bij de concepten is het mogelijk om aan te geven wat jouw standaard verzendopties zijn, voor jouw pakket zendingen naar een Nederlands adres. Je kunt hier kiezen voor extra groot formaat, alleen huisadres, handtekening voor ontvangst, retour bij geen gehoor en verzekerd verzenden.<br><br>Jouw zendingen krijgen hiermee standaard de verzendoptie mee wanneer je deze exporteerd. De opties die je hier aangeeft, kunnen bij het exporteren altijd nog per zending aangepast worden.<br><br>
+        <img src="media/myparcel_concepten.png"/>
+
+            Bij het onderdeel <span class="nice"> Beschrijving op label</span> is het mogelijk om een beschijving te plaatsen. Deze zal worden afgedrukt op de linkerbovenhoek van het label en kun je gebruiken om de zending in jouw orderoverzicht op te zoeken. <br><br>
+            <img src="media/myparcel_veschrijving_label.png"/></p>
+
+
+        <h2 id="3_6">3.6 Gegevens delen</h2><br><br>
+        <img src="media/myparcel_gegevens.png"/>
+<p>Om te zorgen dat het telefoonnummer en e-mailadres mee wordt ge-exporteert naar MyParcel kun jij dit op “Aan” zetten. Het e-mailadres is noodzakelijk als jij de Track&Trace e-mail via het MyParcel systeem wil laten versturen. Dit is vooral handig als jij internationaal pakketten verzend. Bijvoorbeeld de e-mail voor Belgische klanten is tweetalig uitgevoerd, zodat een een klant uit Wallonië ook een Franstalig gedeelte krijgt met de noodzakelijke Track&Trace informatie.</p>
+
+<p>In een aantal landen zijn de afstanden zodanig dat de pakketbezorger eerst naar de ge-adresseerde opbelt of men thuis is. Het telefoonnummer wordt dan in de landen die van toepassing zijn op het label afgedrukt.</p>
+
+<h2 id="3_7">3.7 Bezorgopties checkout</h2>
+<img src="media/Presta-postkantoren-config-MP.png"/>
+De overzichtpagina laat alle vervoerders zien die jij doormiddel van het instellen van de zones, landen, en vervoerders hebt aangemaakt. Wat hierbij een belangrijk aandachtspunt is, dat behalve Postkantoren in Nederland en Belgie de rest van de opties eigenlijk alleen voor Nederlandse adressen gelden. Buiten Nederland kun jij geen opties toevoegen aan een pakket. Wat wel belangrijk kan zijn is dat jij voor Belgische adressen de afhaallocaties kunt activeren door Postkantoren op "Ja" te zetten.
+<br><br>
+<img src="media/Presta-bezorgopties-checkout-config.png"/>
+<br><br>
+<p>
+
+  <ol><li><b>Brievenbuspakje:</b> Als jij deze instelling op “Ja” zet, verdwijnen alle bezorgopties. Een brievenbuspakje is een zending waarop geen opties mogelijk zijn. Voordeel is dat de klant niet thuis hoeft te blijven of naar een servicepunt moet om het op te halen. Het past in de brievenbus, en komt dus nooit bij de buren terecht. Het nadeel is dat er een gewichtsbeperking van 2000 gram is, dat er geen verzekering op mogelijk is, en dat de Track&Trace informatie zeer summier is.</li>
+
+<li><b>Aantal dagen voorruit tonen:</b> Met deze instelling kun jij de klant een bezorgdag laten kiezen. Voordeel is dat de klant de dag kan kiezen waarop er iemand thuis is om het pakket in ontvangst te nemen. Nadeel is dat jij als webshopwinkelier er zelf op moet letten wanneer het moment gekomen is om het pakket bij PostNL af te geven. Dus zorg jij ervoor dat jij meerdere voorraadlocaties inricht waar de gereedgemaakte zendingen op volgorde van verzenddag klaar liggen om af te geven bij PostNL.</li>
+
+<li><b>Afleververtraging:</b> Het kan voorkomen dat jouw product nog geconfigureerd of afgesteld moet worden voordat het verzonden kan worden. Met deze instelling kun jij 1 of meerdere dagen vertraging instellen. Het nadeel is dat dit voor alle zendingen geldt en er geen uitzondering per product gemaakt kan worden.</li>
+
+<li><b>Ochtend en avondlevering:</b> Ochtendlevering heeft een behoorlijke toeslag maar kan belangrijk zijn voor bijvoorbeeld technische vervangingsonderdelen die beslist in de ochtend geleverd moeten worden. Avondlevering is een veel aangeboden optie die veel webwinkel klanten hogelijk waarderen in de checkout. De extra kosten zijn gering, en de meerwaarde groot.</li>
+
+<li><b>Handtekening voor ontvangst:</b> Er moet sowieso een handtekening voor ontvangst gezet worden door degene die het pakket aanneemt (dus ook een huisgenoot of buurman). Afgifte alleen aan de geadresseerde zonder handtekening (dus niet bij de buren). En dan nog de combinatie van geadresseerde die ook nog moet tekenen.
+Vooral bij nieuwsgierige buren is de optie “toeslag voor alleen de geadresseerde” een goede keuze.</li>
+
+<li><b>Postkantoren, PostNL Servicepunten</b>, PakjeGemak locaties, en enkele pakketautomaten (o.a. in Almere): Voor de keuze zijn er twee mogelijkheden. De reguliere afhaaltijden variërend per locatie gemiddeld vanaf 15 of 16 uur af te halen. Of de combinatie extra vroeg afhalen bij een aantal geselecteerde PostNL Business Points. Afhankelijk van de locatie van de geadresseerde zal de keuze automatisch in de checkout beschikbaar zijn.</li></ol></p>
+
+<img src="media/presta-bezorgopties-checkout.png"/>
+Als jij de juiste instellingen hebt gemaakt hoort de check-out er voor jouw klanten er ongeveer volgens bovenstaand voorbeeld uit te zien. In dit geval kan de klant kiezen voor een bepaalde afleverdag, Extra vroeg bezorgen, overdag bezorgen, in de avond bezorgen, afhalen bij een PostNL servicepunt, extra vroeg ophalen bij een PostNL servicepunt, en niet bij de buren en handtekening voor ontvangst.
+<br><br>
+<h2 id="3_8">3.8 Cut-off tijden, uitzonderingen en verzenddagen instellen</h2>
+<br><br>
+<img src="media/Presta-cutoff-tijden-config.png"/>
+<p>In dit gedeelte kun jij instellen op welk moment jij de deur op slot gooit voor de zendingen die diezelfde dag weggebracht gaan worden. Dus voor half vier besteld, dezelfde dag verzonden. Ook kun jij onderaan aangeven op welke dagen jij geen pakketten wil of kunt versturen (feestdagen en speciale dagen).
+
+
+
+
+<h1 id="4">4 Het verwerken van jouw zendingen:</h1>
+<p>Als een order is binnengekomen verschijnt deze in de “Bestellingen”.</p>
+
+<p>Als de order is betaald kun jij de verzending op 2 manieren afhandelen.</p>
+<ol>
+<li> Vink de gewenste bestellingen aan, en kies met de knop bulkacties “Exporteren”. Op dat moment worden alle data van de order naar MyParcel verstuurd en komt deze zending binnen met de status “Concept”. Het voordeel van een concept zending is, dat jij alle opties nog kunt veranderen, en ook nog correcties op de NAW gegevens kunt uitvoeren.<br><br>
+
+Op het moment dat jij in de MyParcel verzendomgeving de labels uitprint worden jouw zendingen aangemeld bij PostNL en krijg jij na een korte tijd een barcode. Deze barcode wordt daarna ook nog teruggekoppeld naar de Prestashop inclusief de status van de zending.</li><br><br>
+
+<li>Methode 2. Vink de gewenste bestellingen in Prestashop aan, en kies uit de “bulkacties”, “Exporteren en Printen”. Er verschijnt een print scherm en er wordt een PDF bestand gegenereerd. Dit PDF bestand kun jij daarna uitprinten. De zending wordt met deze combi actie gelijk bij PostNL aangemeld en is niet meer te wijzigen.<br><br>
+
+Bij beide acties kan het voorkomen dat een zending een foutmelding geeft, en dat er geen export uitgevoerd word. Bij een foutmelding is het verstandig om eerst de adresgegevens te controleren omdat het meestal een fout in een NAW gegevens betreft. Vooral het veld huisnummer toevoeging geeft nog wel eens een probleem bij het gebruik van meer dan 4 karakters</li> </ol> </p>
+
+<img src="media/Presta-bestellijst-gekozenbezorgdatum.png"/>
+In bovenstaand voorbeeld zie jij dat een klant een bezorgdatum heeft gekozen en is het menu bulkacties zichtbaar. <br><br>
+
+<img src="media/Presta-mp-button-zending-editten.png"/>
+Op bovenstaande afbeelding is het venster zichtbaar na het indrukken van de MyParcel button. In dit venster kun jij de bezorg opties nog wijzigen van een specifieke bestelling voordat de zending naar MyParcel ge-exporteerd wordt. Het zou bijvoorbeeld wenselijk kunnen zijn om de zending alsnog te verzekeren.<br><br>
+
+
+<img src="media/Presta-orderlijst-i-button.png"/>
+
+Door op de i (informatie) button te klikken kun jij de huidige status van een verzonden order checken. In dit geval is de order aangemeld bij PostNL maar nog niet aangeboden en nog niet gescand.
+<br><br>
+
+<img src="media/Presta-orderlijst-print-button.png"/>Als jij op de printer button klikt verschijnt er een venster met daarin de mogelijkheid om de startpositie te kiezen voor het te printen label. Ook is het mogelijk om over te schakelen naar een (mits aanwezig) A6 labelprinter. <br><br>
+
+<img src="media/Presta-orderdetails-MPvenster.png"/>In het orderdetail scherm kun jij ook nog aanpassingen maken in de soort verzending of voordat jij de order exporteert een adres correctie toepassen.<br><br>
+
+<h1 id="5">5 Een aantal voorbeelden van een check-out bij verschillende landen en pakket typen</h1>
+
+<img src="media/Presta-checkout-belgie.png"/>Dit is een voorbeeld van een check-out die klanten uit België te zien krijgen. Te zien is het tijdsvak waarin de bezorging plaats kan vinden, en dat de klant ook kan kiezen voor een ophaallocatie.
+<br><br>
+<img src="media/Presta-afhaallocatiekiezer-belgie.png"/>
+Als een Belgische klant kiest voor een ophaallocatie kan hij of zij ook nog kiezen voor een alternatieve locatie.<br><br>
+<img src="media/Presta-BBP-checkout.png"/>
+Bij de keuze van een brievenbuspakket verdwijnen de optie mogelijkheden. Dit alleen voor Nederlandse adressen beschikbare product heeft geen opties. De tracking mogelijkheden zijn beperkt en een verzekering is niet mogelijk.<br><br>
+<img src="media/Presta-check-out-duitsland.png"/>Een Duitse klant heeft maar 1 verzendmogelijkheid met een vaste prijs en geen opties. Pakketten buiten Nederland naar EU landen hebben een vast bedrag als verzekering en worden alleen met een handtekening voor ontvangst afgegeven aan de geadresseerde.
+<br><br>
+  </div>
+
+        <footer class="site-footer">
             <p>
-                In deze handleiding laten wij zien hoe jij de MyParcel plug-in kunt installeren in jouw PrestaShop omgeving. Vervolgens geven wij een instructie van het gebruik van de plug-in.
-                <br><br>
-                De installatie en het gebruik van de koppeling wordt jou kosteloos aangeboden door MyParcel. Wij helpen jou graag met vragen over het gebruik van de plug-in. Omdat PrestaShop een open source platform is, kan het zijn dat de MyParcel plug-in conflicteert met reeds geïnstalleerde plug-ins.
-                <br><br>
-                De MyParcel plugin wordt op een juiste werking getest in een standaard PrestaShop omgeving. Vooral het gebruik van gemodificeerde check-out modules en 3th party shipping modules kan conflicten geven met de MyParcel module.
-                <br><br>
-                De in de vensters getoonde prijzen zijn slechts als voorbeeld ingesteld en wijken af van de werkelijke tarieven. Voor de juiste prijzen kun jij de tarieven in jouw account raadplegen.
-                <br><br>
-                Mocht je problemen ondervinden met de installatie, raden wij je aan contact op te nemen met jouw webshop bouwer.
+                <span class="site-footer-owner"><a href="https://www.myparcel.nl">MyParcel</a></span>
             </p>
-            <div class="box">
-                <p>
-                    Plugins van derden die we ondersteunen
-                </p>
-                <ul>
-                    <li><a href="https://google.nl" target="_blank">Voorbeeld 1</a></li>
-                    <li><a href="https://google.nl" target="_blank">Voorbeeld 2</a></li>
-                    <li><a href="https://google.nl" target="_blank">Voorbeeld 3</a></li>
-                </ul>
-                <p class='nice'>
-                    Let op: Wij leveren geen support op deze plugins!
-                </p>
-            </div>
-            <div>
-                <p>
-                    Eventueel een afsluiter van de inleiding
-                </p>
-            </div>
-            <div style="margin-top:10px">
-                <h1 id="1">1. Installatie</h1>
-                <p>
-                    Dit hoofdstuk omschrijft de installatie van de MyParcel PrestaShop Plug-in met gebruik van de knop “Nieuwe Module toevoegen”.  
-                    <br><br>
-                    Wij adviseren de installatie altijd eerst op een testomgeving uit te voeren en een back-up te maken van jouw webshop voor je met de plugin in de live webshop gaat.
-                </p>
-                <ul>
-                    <li>Download het MyParcel <a href='https://github.com/myparcelnl/prestashop/releases/' target="_blank">PrestaShop Plug-in.zip</a> bestand</li>
-                </ul>
-                <h2 id="1_A">1.1 Via het CMS</h2>
-                <ul>
-                    <li>Ga naar Modules → “Modules Manager” en klik vervolgens op “Upload een Module” en sleep of selecteer het bestand.</li>
-                </ul>
-                <img src='media/PS_UPLOAD_MODULE.jpg'>
-                <h2 id="1_B">1.2 Testen</h2>
-                <p>
-                    Met de plugin van MyParcel worden bepaalde bezorgopties toegevoegd aan jouw checkout. Welke bezorgopties je jouw klant aan wil bieden kun je instellen in de configuratie van de MyParcel plug-in. Wij adviseren dan ook om na het installeren van de plugin jouw bestelproces goed door te lopen of alles naar wens is.
-                    <br><br>
-                    Ook omdat niet alle checkouts in PrestaShop hetzelfde werken is het nogmaals goed om te kijken of alles naar wens staat. Staat alles op de juiste plaats en is het goed uitgelijnd? Onze tip is om hier naar te kijken voordat jouw klanten dit gebruiken.
-                </p>
-                <h2 id="1_C">1.3 Veelgestelde vragen over de installatie</h2>
-                <p>
-                    Zet hier de veel gestelde vragen omtrent de installatie
-                </p>
-                <h1 id="2">2. Configuratie</h1>
-                <ul>
-                    <li>Ga in PrestaShop naar Modules → Modules Manager → MyParcel → Configureer</li>
-                </ul>
-                <img src='media/PS_MODULE_MANAGER.jpg'>
-                <h2 id="2_A">2.1 Instellingen</h2>
-                <h3>API instellingen</h3>
-                <p>
-                    Om verbinding te kunnen maken met jouw MyParcel account is het noodzakelijk om hier jouw API-key in te vullen.
-                </p>
-                <img src='media/PS_API_KEY.jpg'>
-                <p>
-                    Als je ingelogd bent in jouw MyParcel account dan kun je deze vinden in het menu Shopinstellingen → Algemeen.
-                </p>
-                <h3>MyParcel checkout design</h3>
-                <p>
-                    Alle kleuren van de checkout zijn hier aan te passen, naar de gewenste kleuren. Naast de kleuren, is het ook mogelijk om het lettertype aan te passen.
-                </p>
-                <img src='media/PS_CHECKOUT_DESIGN.png'>
-                <h3>Labels</h3>
-                <p>
-                    In het kenmerk van een label heb jij de keuze om er een tekst in te zetten, of om een order ID of Order referentie mee te geven om later makkelijker op te zoeken welke order bij welk pakket hoort.
-                    <br><br>
-                    Bij de keuze voor een standaardprinter gaat het systeem er van uit dat er een A4 (laser)printer gebruikt wordt die 4 A6 labels op één vel uitprint. Je kunt ook de keuze maken voor een labelprinter (moet wel geschikt zijn voor A6 labels) om jouw verzendlabels uit te printen.
-                </p>
-                <img src='media/PS_PRINTPOSITIE.jpg'>
-                <h3>Meldingen</h3>
-                <img src='media/PS_MELDINGEN.jpg'>
-                <h3>Geavanceerd</h3>
-                <img src='media/PS_GEAVANCEERD.jpg'>
-                <h2 id="2_B">2.2 Standaard verzendinstellingen</h2>
-                <h3>Standaard concept</h3>
-                <p>
-                    Bij de concepten is het mogelijk om aan te geven wat jouw standaard verzendopties zijn, voor jouw pakket zendingen naar een Nederlands adres. Je kunt hier kiezen voor extra groot formaat, alleen huisadres, handtekening voor ontvangst, retour bij geen gehoor en verzekerd verzenden.
-                    <br><br>
-                    Jouw zendingen krijgen hiermee standaard de verzendoptie mee wanneer je deze exporteert. De opties die je hier aangeeft, kunnen bij het exporteren altijd nog per zending aangepast worden.
-                </p>
-                <img src='media/PS_STANDAARD_CONCEPT.jpg'>
-                <h3>Standaard retour</h3>
-                <img src='media/PS_STANDAARD_RETOUR.jpg'>
-                <h3>Standaard product</h3>
-                <img src='media/PS_STANDAARD_PRODUCT.jpg'>
-                <h3>Gegevens</h3>
-                <p>
-                    Om te zorgen dat het telefoonnummer en e-mailadres mee wordt ge-exporteert naar MyParcel kun jij dit op “Aan” zetten. Het e-mailadres is noodzakelijk als jij de Track&Trace e-mail via het MyParcel systeem wil laten versturen. Dit is vooral handig als jij internationaal pakketten verzend. Bijvoorbeeld de e-mail voor Belgische klanten is tweetalig uitgevoerd, zodat een een klant uit Wallonië ook een Franstalig gedeelte krijgt met de noodzakelijke Track&amp;Trace informatie.
-                    <br><br>
-                    In een aantal landen zijn de afstanden zodanig dat de pakketbezorger eerst naar de ge-adresseerde opbelt of men thuis is. Het telefoonnummer wordt dan in de landen die van toepassing zijn op het label afgedrukt.
-                </p>
-                <img src='media/PS_GEGEVENS.jpg'>
-                <h3>Bezorgopties voor checkout</h3>
-                <img src='media/PS_BEZORGOPTIES_CHECKOUT.png'>
-                <p>
-                    De overzichtspagina laat alle vervoerders zien die jij door middel van het instellen van de zones, landen, en vervoerders hebt aangemaakt. Wat hierbij een belangrijk aandachtspunt is, dat behalve Postkantoren in Nederland en België de rest van de opties eigenlijk alleen voor Nederlandse adressen gelden. Buiten Nederland kun jij geen opties toevoegen aan een pakket. Wat wel belangrijk kan zijn is dat jij voor Belgische adressen de afhaallocaties kunt activeren door Postkantoren op "Ja" te zetten.
-                </p>
-                <img src='media/PS_BEZORGOPTIES_CHECKOUT_2.png'>
-                <ol>
-                    <li>
-                        <b>Brievenbuspakje:</b> Als jij deze instelling op “Ja” zet, verdwijnen alle bezorgopties. Een brievenbuspakje is een zending waarop geen opties mogelijk zijn. Voordeel is dat de klant niet thuis hoeft te blijven of naar een servicepunt moet om het op te halen. Het past in de brievenbus, en komt dus nooit bij de buren terecht. Het nadeel is dat er een gewichtsbeperking van 2000 gram is, dat er geen verzekering op mogelijk is, en dat de Track&amp;Trace informatie zeer summier is.
-                    </li>
-                    <li>
-                        <b>Aantal dagen voorruit tonen:</b> Met deze instelling kun jij de klant een bezorgdag laten kiezen. Voordeel is dat de klant de dag kan kiezen waarop er iemand thuis is om het pakket in ontvangst te nemen. Nadeel is dat jij als webshopwinkelier er zelf op moet letten wanneer het moment gekomen is om het pakket bij PostNL af te geven. Dus zorg jij ervoor dat jij meerdere voorraadlocaties inricht waar de gereedgemaakte zendingen op volgorde van verzenddag klaar liggen om af te geven bij PostNL.
-                    </li>
-                    <li>
-                        <b>Afleververtraging:</b> Het kan voorkomen dat jouw product nog geconfigureerd of afgesteld moet worden voordat het verzonden kan worden. Met deze instelling kun jij 1 of meerdere dagen vertraging instellen. Het nadeel is dat dit voor alle zendingen geldt en er geen uitzondering per product gemaakt kan worden.
-                    </li>
-                    <li>
-                        <b>Ochtend en avondlevering:</b> Ochtendlevering heeft een behoorlijke toeslag maar kan belangrijk zijn voor bijvoorbeeld technische vervangingsonderdelen die beslist in de ochtend geleverd moeten worden. Avondlevering is een veel aangeboden optie die veel webwinkel klanten hogelijk waarderen in de checkout. De extra kosten zijn gering, en de meerwaarde groot.
-                    </li>
-                    <li>
-                        <b>Handtekening voor ontvangst:</b> Er moet sowieso een handtekening voor ontvangst gezet worden door degene die het pakket aanneemt (dus ook een huisgenoot of buurman). Afgifte alleen aan de geadresseerde zonder handtekening (dus niet bij de buren). En dan nog de combinatie van geadresseerde die ook nog moet tekenen. Vooral bij nieuwsgierige buren is de optie “toeslag voor alleen de geadresseerde” een goede keuze.
-                    </li>
-                    <li>
-                        <b>Postkantoren, PostNL Servicepunten:</b> PakjeGemak locaties, en enkele pakketautomaten (o.a. in Almere): Voor de keuze zijn er twee mogelijkheden. De reguliere afhaaltijden variërend per locatie gemiddeld vanaf 15 of 16 uur af te halen. Of de combinatie extra vroeg afhalen bij een aantal geselecteerde PostNL Business Points. Afhankelijk van de locatie van de geadresseerde zal de keuze automatisch in de checkout beschikbaar zijn.
-                    </li>
-                </ol>
-                <img src='media/PS_CHECKOUT_VERZENDMETHODE.png'>
-                <p>
-                    Als jij de juiste instellingen hebt gemaakt hoort de check-out er voor jouw klanten er ongeveer volgens bovenstaand voorbeeld uit te zien. In dit geval kan de klant kiezen voor een bepaalde afleverdag, Extra vroeg bezorgen, overdag bezorgen, in de avond bezorgen, afhalen bij een PostNL servicepunt, extra vroeg ophalen bij een PostNL servicepunt, en niet bij de buren en handtekening voor ontvangst.
-                </p>
-                <h3>Cut-off tijden, uitzonderingen en verzenddagen instellen</h3>
-                <img src='media/PS_CUTOFF_TIJDEN.png'>
-                <p>
-                    In dit gedeelte kun jij instellen op welk moment jij de deur op slot gooit voor de zendingen die diezelfde dag weggebracht gaan worden. Dus voor half vier besteld, dezelfde dag verzonden. Ook kun jij onderaan aangeven op welke dagen jij geen pakketten wil of kunt versturen (feestdagen en speciale dagen).
-                </p>
-                
-                
-                
-                <h2 id="2_C">2.3 Pagina 3</h2>
-                <p>
-                    Beschrijf alle opties op pagina 3.
-                </p>
-                <h2 id="2_D">2.4 Pagina 4</h2>
-                <p>
-                    Beschrijf alle opties op pagina 4.                    
-                </p>
-                <h2 id="2_E">2.5 Veelgestelde vragen over de configuratie</h2>
-                <h3>Het instellen van zones en landen</h3>
-                <p>
-                    Via het menu onderdeel “Internationaal” > “Locaties” kun jij de zones instellen met daarin de landen die onder die zone vallen. Een zone kan bijvoorbeeld meerdere landen bevatten die jij dezelfde verzendprijs wil geven. (dat hoeft dus niet de prijs te zijn die door MyParcel wordt berekend). Jij wil bijvoorbeeld meer Belgische klanten krijgen, dus biedt jij een aantrekkelijke prijs aan voor de verzending van jouw producten, gelijk aan het bijvoorbeeld het tarief voor Nederland.
-                    <br><br>
-                    In de standaard configuratie staan de zones van complete werelddelen. Jij zal dus nieuwe zones moeten toevoegen om per land een vervoerder te kunnen toevoegen.
-                    <br><br>
-                    Als de zones met de bijbehorende landen zijn aangemaakt, kun jij verder met per zone een “Vervoerder” aan te maken. Op die manier kiest Prestashop de juiste prijs bij de juiste vervoerders.
-                </p>
-                <img src='media/PS_ZONES.png'>
-                <p>
-                    Bovenstaand venster geeft de standaard zones aan die Prestashop als default instelling weergeeft.
-                </p>
-                <img src='media/PS_BEWERK_PAKKET_DE.png'>
-                <p>
-                    als jij de button "Nieuwe zone toevoegen" aanklikt krijg je bovenstaand scherm waar een naam van de zone ingevuld moet worden.
-                </p>
-                <img src='media/PS_LANDEN.png'>
-                <p>
-                    Als je op het scherm landen klikt en jij kiest Duitsland, zie jij dat Duitsland onder de zone Europa valt. Voor Duitsland willen wij een vervoerder instellen die alleen voor Duitse klanten een bepaalde prijs laat zien in de checkout.
-                </p>
-                <img src='media/PS_LANDEN_1.png'>
-                <p>
-                    Voor Duitsland hebben wij een aparte zone aangemaakt die wij "Pakket Duitsland" hebben genoemd.
-                </p>
-                <img src='media/PS_LANDEN_2.png'>
-                <p>
-                    In het tabblad landen zien wij dat het land Duitsland is toegewezen aan de zone "Pakket Duitsland".
-                </p>
-                <h3>Het instellen van de “Vervoerders”</h3>
-                <p>
-                    Als eerste ga jij bepalen welke verzendmethodes (vervoerders) jij wil gebruiken om de producten bij de klant te krijgen.
-                    <br><br>
-                    Dit is afhankelijk van verschillende parameters. Deze zijn:
-                </p>
-                <ol>
-                    <li>Vanuit welke landen kan men bestellen</li>
-                    <li>Voor Nederland: welke soort zending wil ik gebruiken (pakket en/of brievenbuspakket).</li>
-                    <li>Wil ik voor Nederland en België ook ophaallocaties aanbieden</li>
-                    <li>Wil ik dat klanten een product kunnen ophalen in de fysieke winkel of magazijn</li>
-                    <li>Welke bezorg opties wil ik aan Nederlandse klanten aanbieden (avondlevering, niet bij de buren, handtekening voor ontvangst etc….)</li>
-                </ol>
-                <p class=nice>
-                    Niet onbelangrijk is om ook te denken aan de prijzen die jij aan jouw klant wil doorberekenen. De bedragen van de opties moet men los zien van het bedrag wat er wordt doorberekend door MyParcel. Het aanbieden van gratis avondlevering kan het verschil maken tussen jou en de concurrent om de klant voor jouw webshop en producten te laten kiezen.
-                </p>
-                <img src='media/PS_VERVOERDERS.png'>
-                <p>
-                    Hierboven zie je een overzicht van de vervoerders die als voorbeeld in Prestashop aangemaakt kunnen worden. Jij gaat nu een vervoerder voor pakketten aanmaken die in de zone "Pakket Nederland" gaat vallen.
-                    <br><br>
-                    Bij de algemene instellingen kun jij de vervoerder een naam geven, en bij de transitietijd eventueel een verwerkingsboodschap zetten.
-                </p>
-                <img src='media/PS_BEZORG_&_KOSTEN.png'>
-                <p>
-                    Bij bovenstaand scherm geef jij de prijs in bij de zone die er voor deze vervoerder hebt aangemaakt.
-                </p>
-                <img src='media/PS_GROOTTE_GROEPS.png'>
-                <p>
-                    Bij bovenstaand scherm geef jij de pakketafmetingen en het maximum totale pakketgewicht in.
-                </p>
-                <img src='media/PS_SAMENVATTING.png'>
-                <p>
-                    Bovenstaand scherm geeft een overzicht van alle instellingen voor deze vervoerder zijn gemaakt.
-                <h1 id="3">3. Gebruik plugin</h1>
-                <h2 id="3_A">3.1 Aanmaken van één verzendlabel</h2>
-                <p>
-                    Ga naar het bestellingen overzicht in jouw Prestashop omgeving.
-                    <br><br>
-                    Via het MyParcel icoontje kun je een zending aanmaken.
-                </p>
-                <img src='media/PS_MYPARCEL_ICOONTJE.jpg'>
-                <p>
-                    Via het print icoontje kun je een label printen
-                </p>
-                <img src='media/PS_PRINT_ICOONTJE.jpg'>
-                <img src='media/PS_ZENDING_AANMAKEN.jpg'>
-                <p>
-                    Op bovenstaande afbeelding is het venster zichtbaar na het indrukken van de MyParcel button. In dit venster kun jij de bezorgopties nog wijzigen van een specifieke bestelling voordat de zending naar MyParcel geëxporteerd wordt. Het zou bijvoorbeeld wenselijk kunnen zijn om de zending alsnog te verzekeren. Klik daarna op Nieuwe zending en de order wordt geëxporteerd.
-                </p>
-                <h2 id="3_B">3.2 Aanmaken meerdere verzendlabels</h2>
-                <ol>
-                    <li>
-                        Vink de gewenste bestellingen aan, en kies met de knop bulkacties “Exporteren”. Op dat moment worden alle data van de order naar MyParcel verstuurd en komt deze zending binnen met de status “Concept”. Het voordeel van een concept zending is, dat jij alle opties nog kunt veranderen, en ook nog correcties op de NAW gegevens kunt uitvoeren.
-                        <br><br>
-                        Op het moment dat jij in de MyParcel verzendomgeving de labels uitprint worden jouw zendingen aangemeld bij PostNL en krijg jij na een korte tijd een barcode. Deze barcode wordt daarna ook nog teruggekoppeld naar de Prestashop inclusief de status van de zending.
-                    </li>
-                    <li>
-                        Vink de gewenste bestellingen in Prestashop aan, en kies uit de “bulkacties”, “Exporteren en Printen”. Er verschijnt een print scherm en er wordt een PDF bestand gegenereerd. Dit PDF bestand kun jij daarna uitprinten. De zending wordt met deze combi actie gelijk bij PostNL aangemeld en is niet meer te wijzigen.
-                        <br><br>
-                        Bij beide acties kan het voorkomen dat een zending een foutmelding geeft, en dat er geen export uitgevoerd wordt. Bij een foutmelding is het verstandig om eerst de adresgegevens te controleren omdat het meestal een fout in een NAW gegevens betreft. Vooral het veld huisnummer toevoeging geeft nog wel eens een probleem bij het gebruik van meer dan 4 karakters
-                    </li>
-                </ol>
-                <img src='media/PS_BULK_PRINT.png'>
-                <p>
-                    In bovenstaand voorbeeld zie jij dat een klant een bezorgdatum heeft gekozen en is het menu bulkacties zichtbaar.
-                </p>
-                <img src='media/PS_INFO_ZENDING.png'>
-                <p>
-                    Door op de i (informatie) button te klikken kun jij de huidige status van een verzonden order checken. In dit geval is de order aangemeld bij PostNL maar nog niet aangeboden en nog niet gescand.
-                </p>
-                <img src='media/PS_PRINT_POSITIE_ORDER.png'>
-                <p>
-                    Als jij op de printer button klikt verschijnt er een venster met daarin de mogelijkheid om de startpositie te kiezen voor het te printen label. Ook is het mogelijk om over te schakelen naar een (mits aanwezig) A6 labelprinter.
-                </p>
-                <img src='media/PS_ORDERDETAIL.png'>
-                <p>
-                    In het orderdetail scherm kun jij ook nog aanpassingen maken in de soort verzending of voordat jij de order exporteert een adres correctie toepassen.
-
-                </p>
-                <h2 id="3_C">3.3 Aanpassen van een enkele zending</h2>
-                <p>
-                    Beschrijf hier hoe je pakket- en verzendopties aanpast.
-                </p>
-                <h2 id="3_D">3.4 Checkout</h2>
-                <p>
-                    Beschrijf hier hoe de consument de checkout gebruikt.
-                </p>
-                <h2 id="3_E">3.5 Veelgestelde vragen over het gebruik van de plugin</h2>
-                <p>
-                    Zet hier de veel gestelde vragen omtrent het gebruik van de plugin.
-                </p>
-                <footer class="site-footer">
-                    <p>
-                        <span class="site-footer-owner">MyParcel</span>
-                    </p>
-                    <p>
-                        <span class="site-footer-credits">
-                            <strong>Adres </strong>Siriusdreef 66-68, 2132 WT Hoofddorp<br />
-                            <strong>Telefoon </strong>023 30 30 315&nbsp;
-                            <strong>E-mail</strong> &nbsp;info@myparcel.nl<br />
-                            <strong>Website </strong><a href="https://www.myparcel.nl">www.myparcel.nl</a>&nbsp;
-                            <strong>IBAN </strong>NL48ABNA0447850539&nbsp;
-                            <strong>KvK </strong>Amsterdam 34 09 97 58 <br />
-                            <strong>BTW-nr. </strong>NL8045.33.258.B01
-                        </span>
-                        <br />
-                        &nbsp;
-                    </p>
-                </footer>
-            </div>
-        </section>
-    </div>
-</div>
-<script>
-    // Set postman button attributes in one place
-    postman_buttons = document.getElementsByClassName('postman-run-button');
-
-    for (i = 0; i < postman_buttons.length; i++) {
-        postman_buttons[i].setAttribute('data-postman-action', 'collection/import');
-        postman_buttons[i].setAttribute('data-postman-var-1', '065786285c2e5ed75509');
-        postman_buttons[i].setAttribute('data-postman-param', 'env%5BMyParcel%20public%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5IjoiYXBpX2tleSIsInZhbHVlIjoiIn0seyJrZXkiOiJVc2VyLUFnZW50IiwidmFsdWUiOiJ7e1VzZXItQWdlbnR9fSIsImRlc2NyaXB0aW9uIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJhdXRoX3Rva2VuIiwidmFsdWUiOiIiLCJkZXNjcmlwdGlvbiI6IiIsImVuYWJsZWQiOnRydWV9XQ==');
-    }
-
-    (function (p,o,s,t,m,a,n) {
-        !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); });
-        !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
-            (n = o.createElement("script")),
-                (n.id = s+t), (n.async = 1), (n.src = m), n
-        ));
-    }(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"));
+            <p>
+                <span class="site-footer-credits">
+                    <strong>Adres </strong>Siriusdreef 66-68, 2132 WT Hoofddorp
+                    <strong>Telefoon </strong>023 30 30 315&nbsp;
+                    <strong>E-mail</strong><a href="mailto:info@myparcel.nl">&nbsp;info@myparcel.nl</a><br>
+                    <strong>Website </strong><a target="_blank" href="https://www.myparcel.nl">www.myparcel.nl</a>&nbsp;
+                    <strong>IBAN </strong>NL48ABNA0447850539&nbsp;
+                    <strong>KvK </strong>Amsterdam 34 09 97 58 <br>
+                    <strong>BTW-nr. </strong>NL8045.33.258.B01
+                </span>
+            </p>
+        </footer>
+</section>
+<script type="text/javascript">
+  (function init() {
+    if (typeof $ === 'undefined') { setTimeout(init, 100);return; }
+    $('#latest-release-zip').click(function (e) {
+      e.preventDefault();
+      $.get('https://api.github.com/repos/myparcelnl/prestashop/releases/latest')
+        .then(function (response) { window.location.href = response.assets[0].browser_download_url; })
+        .fail(function () { window.location.href = e.target.href; })
+      ;
+    });
+  }());
 </script>
-
 </body>
 </html>

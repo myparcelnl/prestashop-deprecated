@@ -4107,7 +4107,7 @@ class MyParcel extends Module
     protected function getDeliveryOptionsList(HelperList $helper)
     {
         // Search for missing carriers
-        $missing = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT DISTINCT(`id_reference`) FROM `ps_carrier` WHERE `deleted` = 0 AND `id_reference` NOT IN (SELECT `id_reference` FROM `ps_myparcel_carrier_delivery_setting` WHERE `id_shop` = '.(int) $this->getShopId().')');
+        $missing = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT DISTINCT(`id_reference`) FROM `'._DB_PREFIX_.'carrier` WHERE `deleted` = 0 AND `id_reference` NOT IN (SELECT `id_reference` FROM `'._DB_PREFIX_.'myparcel_carrier_delivery_setting` WHERE `id_shop` = '.(int) $this->getShopId().')');
         if (is_array($missing)) {
             $missing = array_column($missing, 'id_reference');
             foreach ($missing as $item) {

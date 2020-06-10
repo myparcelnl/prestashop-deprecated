@@ -465,19 +465,19 @@ class MyParcelOrderHistory extends MyParcelObjectModel
                     'PS_SHOP_EMAIL',
                     null,
                     null,
-                    Context::getContext()->shop->id
+                    $order->id_shop
                 ),
                 (string) Configuration::get(
                     'PS_SHOP_NAME',
                     null,
                     null,
-                    Context::getContext()->shop->id
+                    $order->id_shop
                 ),
                 null,
                 null,
                 $mailDir,
                 false,
-                Context::getContext()->shop->id
+                $order->id_shop
             );
         }
     }

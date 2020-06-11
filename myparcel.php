@@ -191,7 +191,7 @@ class MyParcel extends Module
     {
         $this->name = 'myparcel';
         $this->tab = 'shipping_logistics';
-        $this->version = '2.3.7';
+        $this->version = '2.3.8';
         $this->author = 'MyParcel';
         $this->module_key = 'c9bb3b85a9726a7eda0de2b54b34918d';
         $this->bootstrap = true;

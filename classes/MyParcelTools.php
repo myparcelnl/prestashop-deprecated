@@ -19,17 +19,18 @@
 
 use MyParcelModule\MyParcelHttpClient;
 use MyParcelModule\MyParcelNL\Sdk\src\Model\Repository\MyParcelConsignmentRepository;
+use MyParcelNL\Sdk\src\Model\Consignment\AbstractConsignment;
 
-if (!defined('_PS_VERSION_')) {
+if (! defined('_PS_VERSION_')) {
     return;
 }
 
-require_once dirname(__FILE__).'/../myparcel.php';
-if (!function_exists('smarty_modifier_escape')) {
-    if (file_exists(dirname(__FILE__).'/../../../vendor/smarty/smarty/libs/plugins/modifier.escape.php')) {
-        require_once dirname(__FILE__).'/../../../vendor/smarty/smarty/libs/plugins/modifier.escape.php';
-    } elseif (file_exists(dirname(__FILE__).'/../../../tools/smarty/plugins/modifier.escape.php')) {
-        require_once dirname(__FILE__).'/../../../tools/smarty/plugins/modifier.escape.php';
+require_once dirname(__FILE__) . '/../myparcel.php';
+if (! function_exists('smarty_modifier_escape')) {
+    if (file_exists(dirname(__FILE__) . '/../../../vendor/smarty/smarty/libs/plugins/modifier.escape.php')) {
+        require_once dirname(__FILE__) . '/../../../vendor/smarty/smarty/libs/plugins/modifier.escape.php';
+    } elseif (file_exists(dirname(__FILE__) . '/../../../tools/smarty/plugins/modifier.escape.php')) {
+        require_once dirname(__FILE__) . '/../../../tools/smarty/plugins/modifier.escape.php';
     }
 }
 
@@ -64,18 +65,18 @@ class MyParcelTools
      */
     public static function printOrderGridPreference($id, $tr)
     {
-        $thisModule = static::$thisModule;
-        $thisModuleClass = static::$thisModuleClass;
-        $thisModuleTable = static::$thisModuleTable;
+        $thisModule       = static::$thisModule;
+        $thisModuleClass  = static::$thisModuleClass;
+        $thisModuleTable  = static::$thisModuleTable;
         $supportedModules = static::$supportedModules;
 
-        $output = '';
-        $supportedCarrierModules = array_filter(Hook::getHookModuleExecList('actionAdminOrdersListingFieldsModifier'), function ($item) use ($supportedModules) {
+        $output                     = '';
+        $supportedCarrierModules    = array_filter(Hook::getHookModuleExecList('actionAdminOrdersListingFieldsModifier'), function($item) use ($supportedModules) {
             return in_array($item['module'], $supportedModules);
         });
         $lastSupportedCarrierModule = end($supportedCarrierModules);
         reset($supportedCarrierModules); // Reset array pointer
-        if (!empty($supportedCarrierModules) && $lastSupportedCarrierModule['module'] === static::$thisModule) {
+        if (! empty($supportedCarrierModules) && $lastSupportedCarrierModule['module'] === static::$thisModule) {
             foreach ($supportedCarrierModules as $supportedCarrierModule) {
                 if ($supportedCarrierModule['module'] === static::$thisModule) {
                     continue;
@@ -83,12 +84,12 @@ class MyParcelTools
 
                 /** @var MyParcel $module */
                 $module = Module::getInstanceByName($supportedCarrierModule['module']);
-                if (!Validate::isLoadedObject($module)) {
+                if (! Validate::isLoadedObject($module)) {
                     continue;
                 }
 
                 $columns = $module->getColumns();
-                $result = call_user_func($columns['delivery_date'], $id, $tr);
+                $result  = call_user_func($columns['delivery_date'], $id, $tr);
                 if ($result !== '--') {
                     $output .= $result;
                 }
@@ -130,17 +131,17 @@ class MyParcelTools
                 0,
                 Tools::strlen($option['data']['time'][0]['start'])
             )), 2, '00');
-            $start = "{$startParts[0]}:{$startParts[1]}";
-            $endParts = array_pad(explode(':', Tools::substr(
+            $start      = "{$startParts[0]}:{$startParts[1]}";
+            $endParts   = array_pad(explode(':', Tools::substr(
                 $option['data']['time'][0]['end'],
                 0,
                 Tools::strlen($option['data']['time'][0]['end'])
             )), 2, '00');
-            $end = "{$endParts[0]}:{$endParts[1]}";
+            $end        = "{$endParts[0]}:{$endParts[1]}";
 
             $deliveryDate .= " {$start}-{$end}";
         } else {
-            $deliveryDate .= ' '.date('H:i', strtotime($tr["{$thisModuleTable}_date_delivery"]));
+            $deliveryDate .= ' ' . date('H:i', strtotime($tr["{$thisModuleTable}_date_delivery"]));
         }
 
         Context::getContext()->smarty->assign(array(
@@ -151,17 +152,17 @@ class MyParcelTools
             'shippingDaysRemaining' => $shippingDaysRemaining,
         ));
 
-        $location = 'views/templates/admin/ordergrid/icon-delivery-date.tpl';
-        $module = Module::getInstanceByName($thisModule);
-        $reflection = new ReflectionClass($thisModuleClass);
-        $moduleOverridden = !file_exists(dirname($reflection->getFileName()).'/'.$location);
+        $location         = 'views/templates/admin/ordergrid/icon-delivery-date.tpl';
+        $module           = Module::getInstanceByName($thisModule);
+        $reflection       = new ReflectionClass($thisModuleClass);
+        $moduleOverridden = ! file_exists(dirname($reflection->getFileName()) . '/' . $location);
 
         if ($output) {
             return $output;
         }
 
         return $module->display(
-            $moduleOverridden ? _PS_MODULE_DIR_."{$thisModule}/{$thisModule}.php" : $reflection->getFileName(),
+            $moduleOverridden ? _PS_MODULE_DIR_ . "{$thisModule}/{$thisModule}.php" : $reflection->getFileName(),
             $location
         );
     }
@@ -181,18 +182,18 @@ class MyParcelTools
      */
     public static function printMyParcelTrackTrace($id, $tr)
     {
-        $thisModule = static::$thisModule;
-        $thisModuleClass = static::$thisModuleClass;
+        $thisModule       = static::$thisModule;
+        $thisModuleClass  = static::$thisModuleClass;
         $supportedModules = static::$supportedModules;
 
-        $output = '';
-        $supportedCarrierModules = array_filter(Hook::getHookModuleExecList('actionAdminOrdersListingFieldsModifier'), function ($item) use ($supportedModules) {
+        $output                  = '';
+        $supportedCarrierModules = array_filter(Hook::getHookModuleExecList('actionAdminOrdersListingFieldsModifier'), function($item) use ($supportedModules) {
             return in_array($item['module'], $supportedModules);
         });
 
         $lastSupportedCarrierModule = end($supportedCarrierModules);
         reset($supportedCarrierModules); // Reset array pointer
-        if (!empty($supportedCarrierModules) && $lastSupportedCarrierModule['module'] === $thisModule) {
+        if (! empty($supportedCarrierModules) && $lastSupportedCarrierModule['module'] === $thisModule) {
             foreach ($supportedCarrierModules as $supportedCarrierModule) {
                 if ($supportedCarrierModule['module'] === $thisModule) {
                     continue;
@@ -200,12 +201,12 @@ class MyParcelTools
 
                 /** @var MyParcel $module */
                 $module = Module::getInstanceByName($supportedCarrierModule['module']);
-                if (!Validate::isLoadedObject($module)) {
+                if (! Validate::isLoadedObject($module)) {
                     continue;
                 }
 
                 $columns = $module->getColumns();
-                $result = call_user_func($columns['status'], $id, $tr);
+                $result  = call_user_func($columns['status'], $id, $tr);
                 if ($result !== '--') {
                     $output .= $result;
                 }
@@ -216,13 +217,13 @@ class MyParcelTools
             'tr' => $tr,
         ));
 
-        $location = 'views/templates/admin/ordergrid/icon-tracktrace.tpl';
-        $module = Module::getInstanceByName($thisModule);
-        $reflection = new ReflectionClass($thisModuleClass);
-        $moduleOverridden = !file_exists(dirname($reflection->getFileName()).'/'.$location);
+        $location         = 'views/templates/admin/ordergrid/icon-tracktrace.tpl';
+        $module           = Module::getInstanceByName($thisModule);
+        $reflection       = new ReflectionClass($thisModuleClass);
+        $moduleOverridden = ! file_exists(dirname($reflection->getFileName()) . '/' . $location);
 
-        return $output.$module->display(
-                $moduleOverridden ? _PS_MODULE_DIR_."{$thisModule}/{$thisModule}.php" : $reflection->getFileName(),
+        return $output . $module->display(
+                $moduleOverridden ? _PS_MODULE_DIR_ . "{$thisModule}/{$thisModule}.php" : $reflection->getFileName(),
                 $location
             );
     }
@@ -242,24 +243,24 @@ class MyParcelTools
      */
     public static function printMyParcelIcon($id, $tr)
     {
-        $thisModule = static::$thisModule;
-        $thisModuleClass = static::$thisModuleClass;
+        $thisModule       = static::$thisModule;
+        $thisModuleClass  = static::$thisModuleClass;
         $supportedModules = static::$supportedModules;
 
         $output = '';
 
-        $supportedCarrierModules = array_filter(Hook::getHookModuleExecList('actionAdminOrdersListingFieldsModifier'), function ($item) use ($supportedModules) {
+        $supportedCarrierModules    = array_filter(Hook::getHookModuleExecList('actionAdminOrdersListingFieldsModifier'), function($item) use ($supportedModules) {
             $module = Module::getInstanceByName($item['module']);
-            if (!Validate::isLoadedObject($module)) {
+            if (! Validate::isLoadedObject($module)) {
                 return false;
             }
 
             return in_array($item['module'], $supportedModules)
-                && version_compare($module->version, '2.2.0', '>=');
+                   && version_compare($module->version, '2.2.0', '>=');
         });
         $lastSupportedCarrierModule = end($supportedCarrierModules);
         reset($supportedCarrierModules); // Reset array pointer
-        if (!empty($supportedCarrierModules) && $lastSupportedCarrierModule['module'] === $thisModule) {
+        if (! empty($supportedCarrierModules) && $lastSupportedCarrierModule['module'] === $thisModule) {
             foreach ($supportedCarrierModules as $supportedCarrierModule) {
                 if ($supportedCarrierModule['module'] === $thisModule) {
                     continue;
@@ -267,12 +268,12 @@ class MyParcelTools
 
                 /** @var MyParcel $module */
                 $module = Module::getInstanceByName($supportedCarrierModule['module']);
-                if (!Validate::isLoadedObject($module)) {
+                if (! Validate::isLoadedObject($module)) {
                     continue;
                 }
 
                 $columns = $module->getColumns();
-                $result = call_user_func($columns['concept'], $id, $tr);
+                $result  = call_user_func($columns['concept'], $id, $tr);
                 if ($result) {
                     $output .= $result;
                 }
@@ -283,13 +284,13 @@ class MyParcelTools
             'tr' => $tr,
         ));
 
-        $location = 'views/templates/admin/ordergrid/icon-concept.tpl';
-        $module = Module::getInstanceByName($thisModule);
-        $reflection = new ReflectionClass($thisModuleClass);
-        $moduleOverridden = !file_exists(dirname($reflection->getFileName()).'/'.$location);
+        $location         = 'views/templates/admin/ordergrid/icon-concept.tpl';
+        $module           = Module::getInstanceByName($thisModule);
+        $reflection       = new ReflectionClass($thisModuleClass);
+        $moduleOverridden = ! file_exists(dirname($reflection->getFileName()) . '/' . $location);
 
-        return $output.$module->display(
-                $moduleOverridden ? _PS_MODULE_DIR_."{$thisModule}/{$thisModule}.php" : $reflection->getFileName(),
+        return $output . $module->display(
+                $moduleOverridden ? _PS_MODULE_DIR_ . "{$thisModule}/{$thisModule}.php" : $reflection->getFileName(),
                 $location
             );
     }
@@ -310,16 +311,16 @@ class MyParcelTools
     {
         // @codingStandardsIgnoreEnd
         Context::getContext()->smarty->assign(array(
-            'tr'           => $tr,
+            'tr' => $tr,
         ));
 
-        $location = 'views/templates/admin/cutofflistitem.tpl';
-        $module = Module::getInstanceByName('myparcel');
-        $reflection = new ReflectionClass('MyParcel');
-        $moduleOverridden = !file_exists(dirname($reflection->getFileName()).'/'.$location);
+        $location         = 'views/templates/admin/cutofflistitem.tpl';
+        $module           = Module::getInstanceByName('myparcel');
+        $reflection       = new ReflectionClass('MyParcel');
+        $moduleOverridden = ! file_exists(dirname($reflection->getFileName()) . '/' . $location);
 
         return $module->display(
-            $moduleOverridden ? _PS_MODULE_DIR_.'myparcel/myparcel.php' : $reflection->getFileName(),
+            $moduleOverridden ? _PS_MODULE_DIR_ . 'myparcel/myparcel.php' : $reflection->getFileName(),
             $location
         );
     }
@@ -336,7 +337,7 @@ class MyParcelTools
      */
     public static function printCarrierName($name)
     {
-        if (!$name && method_exists('Carrier', 'getCarrierNameFromShopName')) {
+        if (! $name && method_exists('Carrier', 'getCarrierNameFromShopName')) {
             return Carrier::getCarrierNameFromShopName();
         }
 
@@ -357,7 +358,7 @@ class MyParcelTools
         if (base64_encode(base64_decode($content)) === $content
             && mb_strlen($content) >= 8
         ) {
-            return '<pre><code>'.smarty_modifier_escape(base64_decode($content), 'htmlall', 'UTF-8').'</code></pre>';
+            return '<pre><code>' . smarty_modifier_escape(base64_decode($content), 'htmlall', 'UTF-8') . '</code></pre>';
         }
 
         return $content;
@@ -393,8 +394,8 @@ class MyParcelTools
     public static function getAddressLineFields($idCountry)
     {
         $country = new Country($idCountry);
-        $iso = Tools::strtoupper($country->iso_code);
-        if ($line = Configuration::get(MyParcel::ADDRESS_FIELD_OVERRIDE.$iso)) {
+        $iso     = Tools::strtoupper($country->iso_code);
+        if ($line = Configuration::get(MyParcel::ADDRESS_FIELD_OVERRIDE . $iso)) {
             return explode(' ', $line);
         }
 
@@ -418,10 +419,10 @@ class MyParcelTools
      */
     public static function getAddressLine(Address $address)
     {
-        $country = new Country($address->id_country);
-        $iso = Tools::strtoupper($country->iso_code);
+        $country     = new Country($address->id_country);
+        $iso         = Tools::strtoupper($country->iso_code);
         $addressLine = '';
-        if ($line = Configuration::get(MyParcel::ADDRESS_FIELD_OVERRIDE.$iso)) {
+        if ($line = Configuration::get(MyParcel::ADDRESS_FIELD_OVERRIDE . $iso)) {
             $fields = explode(' ', $line);
         } else {
             $fields = static::getAddressLineFields($address->id_country);
@@ -432,7 +433,7 @@ class MyParcelTools
         } else {
             foreach ($fields as $field) {
                 if ($field && $address->{$field}) {
-                    $addressLine .= ' '.$address->{$field};
+                    $addressLine .= ' ' . $address->{$field};
                 }
             }
         }
@@ -456,8 +457,8 @@ class MyParcelTools
     public static function getParsedAddress(Address $address)
     {
         $country = new Country($address->id_country);
-        $iso = Tools::strtoupper($country->iso_code);
-        if (!in_array($iso, array('NL', 'BE'))) {
+        $iso     = Tools::strtoupper($country->iso_code);
+        if (! in_array($iso, array('NL', 'BE'))) {
             return array(
                 'street'        => static::getAddressLine($address),
                 'number'        => '',
@@ -465,33 +466,39 @@ class MyParcelTools
             );
         }
         if ($iso === 'NL') {
-            $regex = MyParcelConsignmentRepository::SPLIT_STREET_REGEX;
+            $regex       = MyParcelConsignmentRepository::SPLIT_STREET_REGEX;
             $addressLine = static::getAddressLine($address);
             preg_match($regex, $addressLine, $matches);
-            if (!isset($matches['number']) || !$matches['number']) {
+            if (! isset($matches['number']) || ! $matches['number']) {
                 preg_match($regex, "{$address->address1} {$address->address2}", $matches);
             }
 
             return array(
-                'street'        => !empty($matches['street']) ? $matches['street'] : $addressLine,
-                'number'        => !empty($matches['street']) && isset($matches['number']) ? $matches['number'] : '',
-                'number_suffix' => Tools::substr(!empty($matches['street']) && isset($matches['number_suffix']) ? $matches['number_suffix'] : '', 0, 6),
+                'street'        => ! empty($matches['street']) ? $matches['street'] : $addressLine,
+                'number'        => ! empty($matches['street']) && isset($matches['number']) ? $matches['number'] : '',
+                'number_suffix' => Tools::substr(! empty($matches['street']) && isset($matches['number_suffix']) ? $matches['number_suffix'] : '', 0, 6),
             );
         } else {
-            $results = array();
-            $counts = array();
-            $addressLine = static::getAddressLine($address);
+            $results            = array();
+            $counts             = array();
+            $addressLine        = static::getAddressLine($address);
             $defaultAddressLine = $address->address1;
             foreach (array($addressLine, $defaultAddressLine) as $target) {
+                // Replace box variants to bus
+                $fullStreet = str_ireplace(MyParcelConsignmentRepository::BOX_SEPARATOR, MyParcelConsignmentRepository::BOX_NL, $target);
+                $target     = trim(preg_replace('/(\r\n)|\n|\r/', ' ', $fullStreet));
                 preg_match(MyParcelConsignmentRepository::SPLIT_STREET_REGEX_BE, $target, $matches);
-                $result = array(
+
+                $result    = array(
                     'street'        => isset($matches['street']) ? $matches['street'] : '',
                     'street_suffix' => isset($matches['street_suffix']) ? $matches['street_suffix'] : '',
                     'number'        => isset($matches['number']) ? $matches['number'] : '',
                     'box_separator' => isset($matches['box_separator']) ? $matches['box_separator'] : '',
                     'box_number'    => isset($matches['box_number']) ? $matches['box_number'] : '',
                 );
-                $counts[] = array_sum(array_map(function ($item) { return !empty($item); }, array_values($result)));
+                $counts[]  = array_sum(array_map(function($item) {
+                    return ! empty($item);
+                }, array_values($result)));
                 $results[] = $result;
                 unset($matches);
             }
@@ -522,7 +529,7 @@ class MyParcelTools
     public static function getAdditionalAddressLine(Address $address)
     {
         $fields = static::getAddressLineFields($address->id_country);
-        if (!in_array('address2', $fields)) {
+        if (! in_array('address2', $fields)) {
             return $address->address2;
         }
 
@@ -543,13 +550,13 @@ class MyParcelTools
     public static function getCustomerAddress($idCustomer, $locationCode)
     {
         $address = new Address();
-        $sql = new DbQuery();
+        $sql     = new DbQuery();
         $sql->select('a.*');
         $sql->from('address', 'a');
-        $sql->where('a.`id_customer` = '.(int) $idCustomer);
-        $sql->where('a.`alias` = \'myparcel-'.pSQL($locationCode).'\'');
+        $sql->where('a.`id_customer` = ' . (int) $idCustomer);
+        $sql->where('a.`alias` = \'myparcel-' . pSQL($locationCode) . '\'');
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
-        if (!empty($result)) {
+        if (! empty($result)) {
             $address->hydrate($result);
         }
 
@@ -589,7 +596,6 @@ class MyParcelTools
     }
 
 
-
     /**
      * @return array
      *
@@ -615,9 +621,9 @@ class MyParcelTools
         $sql = new DbQuery();
         $sql->select('`value`');
         $sql->from(bqSQL(Configuration::$definition['table']));
-        $sql->where('`name` = \''.pSQL(MyParcel::SUPPORTED_COUNTRIES).'\' AND `id_shop` IS NULL');
+        $sql->where('`name` = \'' . pSQL(MyParcel::SUPPORTED_COUNTRIES) . '\' AND `id_shop` IS NULL');
         $countries = @json_decode(Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql), true);
-        if (is_array($countries) && !empty($countries)) {
+        if (is_array($countries) && ! empty($countries)) {
             return $countries;
         }
 
@@ -638,9 +644,9 @@ class MyParcelTools
      */
     public static function retrieveSupportedCountries()
     {
-        $curl = new MyParcelHttpClient();
+        $curl      = new MyParcelHttpClient();
         $countries = $curl->get(MyParcel::SUPPORTED_COUNTRIES_URL);
-        if (!$countries || !isset($countries['data']['countries'][0])) {
+        if (! $countries || ! isset($countries['data']['countries'][0])) {
             $countries = json_encode(MyParcelTools::getSupportedCountriesOffline(), JSON_UNESCAPED_UNICODE);
         } else {
             if (isset($countries['data']['countries'][0]['GB']['region'])) {
@@ -648,6 +654,7 @@ class MyParcelTools
             }
             Configuration::updateValue(MyParcel::SUPPORTED_COUNTRIES, mypa_json_encode($countries));
         }
+
         return $countries;
     }
 
@@ -664,7 +671,7 @@ class MyParcelTools
     public static function getEUCountries()
     {
         $countries = static::getSupportedCountries();
-        if (!isset($countries['data']['countries'][0])) {
+        if (! isset($countries['data']['countries'][0])) {
             return array();
         }
         $euCountries = array();
@@ -691,7 +698,7 @@ class MyParcelTools
         if ($class == null) {
             return '';
         }
-        if (!$idLang) {
+        if (! $idLang) {
             $idLang = Context::getContext()->language->id;
         }
 
@@ -699,8 +706,8 @@ class MyParcelTools
         $sql->select('tl.`name`');
         $sql->from('tab', 't');
         $sql->innerJoin('tab_lang', 'tl', 'tl.`id_tab` = t.`id_tab`');
-        $sql->where('t.`class_name` = \''.pSQL($class).'\'');
-        $sql->where('tl.`id_lang` = '.(int) $idLang);
+        $sql->where('t.`class_name` = \'' . pSQL($class) . '\'');
+        $sql->where('tl.`id_lang` = ' . (int) $idLang);
 
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql);
@@ -717,7 +724,7 @@ class MyParcelTools
     public static function ppTags($string, $tags = array())
     {
         // If tags were explicitely provided, we want to use them *after* the translation string is escaped.
-        if (!empty($tags)) {
+        if (! empty($tags)) {
             foreach ($tags as $index => $tag) {
                 // Make positions start at 1 so that it behaves similar to the %1$d etc. sprintf positional params
                 $position = $index + 1;
@@ -725,11 +732,11 @@ class MyParcelTools
                 $match = array();
                 if (preg_match('/^\s*<\s*(\w+)/', $tag, $match)) {
                     $opener = $tag;
-                    $closer = '</'.$match[1].'>';
+                    $closer = '</' . $match[1] . '>';
 
-                    $string = str_replace('['.$position.']', $opener, $string);
-                    $string = str_replace('[/'.$position.']', $closer, $string);
-                    $string = str_replace('['.$position.'/]', $opener.$closer, $string);
+                    $string = str_replace('[' . $position . ']', $opener, $string);
+                    $string = str_replace('[/' . $position . ']', $closer, $string);
+                    $string = str_replace('[' . $position . '/]', $opener . $closer, $string);
                 }
             }
         }
@@ -750,8 +757,8 @@ class MyParcelTools
      */
     public static function getInsuranceAmount($return = false)
     {
-        if (Configuration::get(constant('MyParcel::DEFAULT_'.($return ? 'RETURN_' : '').'CONCEPT_INSURED'))) {
-            switch (Configuration::get(constant('MyParcel::DEFAULT_'.($return ? 'RETURN_' : '').'CONCEPT_INSURED_TYPE'))) {
+        if (Configuration::get(constant('MyParcel::DEFAULT_' . ($return ? 'RETURN_' : '') . 'CONCEPT_INSURED'))) {
+            switch (Configuration::get(constant('MyParcel::DEFAULT_' . ($return ? 'RETURN_' : '') . 'CONCEPT_INSURED_TYPE'))) {
                 case MyParcel::INSURED_TYPE_100:
                     return 10000;
                 case MyParcel::INSURED_TYPE_250:
@@ -759,7 +766,7 @@ class MyParcelTools
                 case MyParcel::INSURED_TYPE_500:
                     return 50000;
                 default:
-                    return (int) Configuration::get(constant('MyParcel::DEFAULT_'.($return ? 'RETURN_' : '').'CONCEPT_INSURED_AMOUNT'));
+                    return (int) Configuration::get(constant('MyParcel::DEFAULT_' . ($return ? 'RETURN_' : '') . 'CONCEPT_INSURED_AMOUNT'));
             }
         }
 
@@ -785,10 +792,10 @@ class MyParcelTools
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object !== '.' && $object !== '..') {
-                    if (filetype($dir.'/'.$object) === 'dir') {
-                        static::recursiveDeleteOnDisk($dir.'/'.$object);
+                    if (filetype($dir . '/' . $object) === 'dir') {
+                        static::recursiveDeleteOnDisk($dir . '/' . $object);
                     } else {
-                        @unlink($dir.'/'.$object);
+                        @unlink($dir . '/' . $object);
                     }
                 }
             }
@@ -841,6 +848,6 @@ class MyParcelTools
      */
     public static function isMultiKeyEnvironment()
     {
-        return (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT COUNT(DISTINCT `value`) FROM `'._DB_PREFIX_.'configuration` WHERE `name` = "'.pSQL(MyParcel::API_KEY).'" AND `value` IS NOT NULL AND `value` != ""') > 1;
+        return (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT COUNT(DISTINCT `value`) FROM `' . _DB_PREFIX_ . 'configuration` WHERE `name` = "' . pSQL(MyParcel::API_KEY) . '" AND `value` IS NOT NULL AND `value` != ""') > 1;
     }
 }

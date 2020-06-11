@@ -25,6 +25,9 @@ use MyParcelModule\MyParcelNL\Sdk\src\Model\MyParcelCustomsItem;
  */
 class MyParcelConsignmentRepository extends \MyParcelModule\MyParcelNL\Sdk\src\Model\MyParcelConsignment
 {
+    const BOX_NL                 = 'bus';
+    const BOX_SEPARATOR          = [' boîte',' boite','app', 'appt',' box', ' bte', ' Bus'];
+
     /**
      * Regular expression used to split street name from house number.
      *
@@ -35,7 +38,9 @@ class MyParcelConsignmentRepository extends \MyParcelModule\MyParcelNL\Sdk\src\M
     /**
      * Regular expression used to split street name from house number.
      */
-    const SPLIT_STREET_REGEX_BE = '~^(?P<street>.*?)\\s(?P<street_suffix>(?P<number>\\d[^\\s#]{1,8})\\s*(?P<box_separator>(bus|Bus|boîte|Boîte|boite|Boite|box|Box|bte|Bte|app|App|appt|Appt|/|\\|#)?)?\\s*(?P<box_number>\\d{0,8}$))$~';
+    const SPLIT_STREET_REGEX_BE = '~^(?P<street>.*?)\s(?P<street_suffix>(?P<number>\d{1,4})\s?(?P<box_separator>' . self::BOX_NL . '?)?[\s-]?(?P<box_number>\w{0,8}$))$~';
+   // Old SPLIT_STREET_REGEX_BE = const SPLIT_STREET_REGEX_BE = '~^(?P<street>.*?)\\s(?P<street_suffix>(?P<number>\\d[^\\s#]{1,8})\\s*(?P<box_separator>(bus|Bus|boîte|Boîte|boite|Boite|box|Box|bte|Bte|app|App|appt|Appt|/|\\|#)?)?\\s*(?P<box_number>\\d{0,8}$))$~';
+
     /**
      * Consignment types
      */

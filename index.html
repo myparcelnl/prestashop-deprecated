@@ -39,7 +39,7 @@
     </h2>
     <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop">GitHub</a>
     <a target="_blank" class="btn" href="https://github.com/myparcelnl/prestashop/releases">Alle updates</a>
-    <a id="latest-release-zip" target="_blank" class="btn" onclick="downloadLatestFromGitHub(event, 'myparcelnl/prestashop')" href="https://github.com/myparcelnl/prestashop/releases/latest">Laatste stabiele versie</a>
+    <a target="_blank" class="latest-release-zip btn" onclick="downloadLatestFromGitHub(event, 'myparcelnl/prestashop')" href="https://github.com/myparcelnl/prestashop/releases/latest">Laatste stabiele versie</a>
 </section>
 <section class="main-content">
     <h1>Inleiding</h1>
@@ -61,10 +61,9 @@ Mocht je problemen ondervinden met de installatie, raden wij je aan contact op t
         <h1 id="1">1 Installatie</h1>
         <p>
           Dit hoofdstuk omschrijft de installatie van de MyParcel PrestaShop Plug-in met gebruik van de knop “Nieuwe Module toevoegen”.  <br><br> Wij adviseren de installatie altijd eerst op een testomgeving uit te voeren en een back-up te maken van jouw webshop voor je met de plugin in de live webshop gaat.
-
         </p>
         <ol>
-            <li>Download het MyParcel <a href="https://github.com/myparcelnl/prestashop/releases/download/v2.0.7/myparcel-v2.0.7.zip" target="_blank">PrestaShop Plug-in.zip </a>bestand</li>
+            <li>Download het MyParcel <a target="_blank" class="latest-release-zip" onclick="downloadLatestFromGitHub(event, 'myparcelnl/prestashop')" href="https://github.com/myparcelnl/prestashop/releases/latest">PrestaShop Plug-in.zip</a> bestand</li>
         </ol>
 
         <h2 id="1_1">1.1 Via het CMS</h2>
@@ -273,7 +272,7 @@ Bij de keuze van een brievenbuspakket verdwijnen de optie mogelijkheden. Dit all
 <script type="text/javascript">
   (function init() {
     if (typeof $ === 'undefined') { setTimeout(init, 100);return; }
-    $('#latest-release-zip').click(function (e) {
+    $('.latest-release-zip').click(function (e) {
       e.preventDefault();
       $.get('https://api.github.com/repos/myparcelnl/prestashop/releases/latest')
         .then(function (response) { window.location.href = response.assets[0].browser_download_url; })
